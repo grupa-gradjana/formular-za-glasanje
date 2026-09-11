@@ -43,7 +43,7 @@ function ReviewView({
         ["JMBG", formData.jmbg],
         ["Adresa prebivališta u Srbiji", formData.addressSerbia],
         ["Adresa u inostranstvu", formData.addressAbroad],
-        ["Grad i država u kojoj želite da glasate", formData.votingLocation],
+        ["Grad i država u kojima želite da glasate", formData.votingLocation],
         ["Kontakt telefon", formData.phone],
         ["I-mejl", formData.email],
     ];

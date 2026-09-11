@@ -15,11 +15,7 @@ import AboutPanel from "./AboutPanel";
 function TrustPage({ onBack }) {
     return (
         <div className="shell" role="region" aria-labelledby="trust-title">
-            <button
-                type="button"
-                onClick={onBack}
-                className="chrome-link mb-4"
-            >
+            <button type="button" onClick={onBack} className="chrome-link mb-4">
                 ← Nazad na zahtev
             </button>
 
@@ -27,7 +23,7 @@ function TrustPage({ onBack }) {
                 Kako da proverite ovu stranicu
             </h1>
             <p className="lead mb-9">
-                Ne morate ništa da verujete na reč. Sve što ovde piše možete
+                Ne morate ništa da nam verujete na reč. Sve što ovde piše možete
                 sami da proverite — a možete i da zaobiđete ovu stranicu i
                 popunite zahtev rukom.
             </p>

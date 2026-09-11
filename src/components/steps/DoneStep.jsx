@@ -183,7 +183,7 @@ function DoneStep({ docType, pdfBlob }) {
                 the file, so it gets the red rule rather than another hint. */}
             <div className="pulled rule-top mt-7 pt-5">
                 <p className="body m-0">
-                    Rok za prijavu je 3 Oktobar 2026. Ako ga propustite, nećete
+                    Rok za prijavu je 3. oktobar 2026. Ako ga propustite, nećete
                     moći da glasate na izborima 2026. godine.
                 </p>
             </div>

@@ -46,7 +46,7 @@ function ChipIdCardStep({ onNext, onPrevious }) {
                         <p className="body mb-4">
                             Potreban vam je čitač kartica i program „Čitač
                             elektronske lične karte“ Ministarstva unutrašnjih
-                            poslova. Ako nemate čitač, ličnu kartu mogu da očita
+                            poslova. Ako nemate čitač, ličnu kartu mogu da očitaju
                             na šalteru u Srbiji — u policijskoj stanici, opštini
                             ili pošti — pa da vam pošalju očitanu ličnu kartu.
                         </p>

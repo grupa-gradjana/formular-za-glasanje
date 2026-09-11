@@ -21,7 +21,7 @@ function WelcomeStep({ onNext, onOpenTrust }) {
                 Popunite zahtev za glasanje iz inostranstva
             </h1>
             <p className="lead mb-7 max-w-[46ch]">
-                Ovaj stranica vam pomaže da samo za nekoliko minuta popunite i
+                Ova stranica vam pomaže da samo za nekoliko minuta popunite i
                 pripremite zvaničan formular-zahtev za glasanje iz inostranstva
                 objavljen na internet stranicama ambasada.
             </p>
@@ -49,7 +49,7 @@ function WelcomeStep({ onNext, onOpenTrust }) {
                         Popunjeni zahtev-formular, sa slikom pasoša (ili slikom
                         lične karte), preuzimate u PDF formatu.{" "}
                         <span className="font-extrabold italic">
-                            Preuzeti fajl potom pošaljite imejlom ambasadi ili
+                            Preuzeti fajl potom pošaljite i-mejlom ambasadi ili
                             konzulatu.{" "}
                         </span>
                         Ova stranica ne prikuplja vaše podatke i ne šalje ništa
@@ -70,7 +70,7 @@ function WelcomeStep({ onNext, onOpenTrust }) {
                         </p>
                         <p className="field-hint">
                             Ime, JMBG, adresu u Srbiji i inostranstvu, kontakt
-                            telefon i imejl.
+                            telefon i i-mejl.
                         </p>
                     </div>
                 </li>
@@ -97,7 +97,7 @@ function WelcomeStep({ onNext, onOpenTrust }) {
                             Preuzmite popunjen zahtev
                         </p>
                         <p className="field-hint">
-                            Pošaljite ga ambasadi ili konzulatu imejlom, ili ga
+                            Pošaljite ga ambasadi ili konzulatu i-mejlom, ili ga
                             odnesite lično.
                         </p>
                     </div>

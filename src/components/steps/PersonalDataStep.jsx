@@ -34,6 +34,24 @@ import {
  * @param {Function} props.onPrevious - go back to the first screen
  */
 
+/**
+ * "znak" / "znaka" / "znakova" for a count — Serbian agrees the noun with the
+ * last digit (1 → znak, 2–4 → znaka, everything else → znakova), except in the
+ * teens, which always take the genitive plural. The measured cut point lands
+ * anywhere in the tens and hundreds, so the warning cannot hard-code one form.
+ *
+ * @param {number} n
+ * @returns {string}
+ */
+const characterWord = (n) => {
+    const lastTwo = n % 100;
+    const last = n % 10;
+    if (lastTwo >= 11 && lastTwo <= 14) return "znakova";
+    if (last === 1) return "znak";
+    if (last >= 2 && last <= 4) return "znaka";
+    return "znakova";
+};
+
 function PersonalDataStep({ formData, onFormChange, onSubmit, onPrevious }) {
     // The width function comes from the font that was fetched when the app
     // mounted, so it is normally here before this screen can be reached. While
@@ -118,8 +136,8 @@ function PersonalDataStep({ formData, onFormChange, onSubmit, onPrevious }) {
                         </span>
                         <span>
                             Ovo ne staje u polje na zahtevu. Skratite na
-                            najviše {fits} znakova — trenutno ih ima{" "}
-                            {value.length}.
+                            najviše {fits} {characterWord(fits)} — trenutno ih
+                            ima {value.length}.
                         </span>
                     </p>
                 )}
@@ -180,7 +198,7 @@ function PersonalDataStep({ formData, onFormChange, onSubmit, onPrevious }) {
                 {ruleField("addressAbroad", "Adresa u inostranstvu")}
                 {ruleField(
                     "votingLocation",
-                    "Grad i država u kojoj želite da glasate",
+                    "Grad i država u kojima želite da glasate",
                 )}
             </fieldset>
 
