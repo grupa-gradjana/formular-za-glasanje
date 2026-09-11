@@ -1,0 +1,39 @@
+# Response headers for the deployed site.
+#
+# The same policy also ships as a <meta> tag in index.html, which is what
+# protects `npm run dev` and `npm run preview`. Netlify headers apply only to
+# the deployed site, so both are kept: a browser enforces every policy it is
+# given, and the two are identical apart from frame-ancestors.
+#
+# frame-ancestors is the one directive a <meta> CSP cannot carry — it is
+# ignored there by spec — so sending the policy as a real header is what
+# actually stops the page being framed by another site.
+#
+# No [build] section on purpose: build command and publish directory stay
+# whatever the Netlify dashboard already has, so this file cannot silently
+# change how the site is built.
+
+[[headers]]
+  for = "/*"
+
+  [headers.values]
+    # Single line deliberately: a header value cannot contain a raw newline,
+    # and a one-line string leaves no room for a TOML parser to disagree.
+    Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' data: blob:; form-action 'none'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'"
+
+    # Legacy counterpart to frame-ancestors, for older browsers.
+    X-Frame-Options = "DENY"
+
+    # Never let a response be reinterpreted as a type it did not declare.
+    X-Content-Type-Options = "nosniff"
+
+    # The page links out to mfa.gov.rs, mup.gov.rs and github.com. Without
+    # this, those sites are told which page the visitor came from — i.e. that
+    # this person is preparing a voting request. Send nothing.
+    Referrer-Policy = "no-referrer"
+
+    # None of these are used. The document image arrives through a plain
+    # <input type="file" accept="image/*">, which the OS file picker serves
+    # (including from the camera app) — Permissions-Policy governs
+    # getUserMedia, not the picker, so camera=() does not affect it.
+    Permissions-Policy = "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()"
