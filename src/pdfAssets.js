@@ -1,18 +1,17 @@
 /**
  * The blank form and the font it gets filled in with — the last two things
- * this app needs from the network.
+ * this app needs from the network, and the only two it does not bundle.
  *
- * They used to be fetched inside `handleGeneratePDF`, which made the final
- * click of the wizard the one step that could not be served offline: the user
- * fills everything in, the connection drops, and generation fails *after* the
- * JMBG, both sides of the ID and the signature have been entered — none of
- * which survive a reload, by design. Fetching them once at start-up is what
- * makes "loaded once, then works with the network cut" true for the whole
- * flow, not just for the steps before this one.
+ * Both are fetched once at start-up (App calls loadPdfAssets() on mount) and
+ * held in memory for the rest of the session, rather than being fetched by the
+ * step that draws the PDF. That ordering is what makes "loaded once, then
+ * works with the network cut" true for the whole wizard: a request issued at
+ * the last step would fail *after* the JMBG, both sides of the document and
+ * the signature have been entered, none of which survive a reload by design.
  *
- * Both are same-origin static files and are kept in memory as ArrayBuffers,
- * alongside the rest of the form state: nothing is written to disk, and
- * nothing goes near browser storage.
+ * Both are same-origin static files and are kept as ArrayBuffers alongside the
+ * rest of the form state: nothing is written to disk, and nothing goes near
+ * browser storage.
  */
 
 import fontkit from "@pdf-lib/fontkit";

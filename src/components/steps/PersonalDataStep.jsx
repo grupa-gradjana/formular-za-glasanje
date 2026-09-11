@@ -8,19 +8,24 @@ import {
 } from "../../pdfLayout";
 
 /**
- * Step 1 — the eight fields, one column, 19px inputs.
+ * Step 1 — the eight fields the zahtev asks for, in one column.
  *
- * Two things differ from the old version beyond styling:
- *  - JMBG is a single monospace input rather than 13 boxes (same 13-digit
- *    filtering, far less to code, debug and edit).
- *  - Fields that are drawn onto a printed rule on page 1 of the template warn
- *    when the value will not fit. ReviewStep shrinks and wraps to make room
- *    (see src/pdfLayout.js), but the rule is only 229.75pt wide and past two
- *    lines at 9pt the tail is silently lost from the form the consulate
- *    receives. The check here is the same layout routine run against the same
- *    font, so what the user is warned about is exactly what would be cut —
- *    a character count could not do that, since width is a property of the
- *    glyphs and not of the number of them.
+ * Six of them are drawn onto a printed rule on page 1 of the template, and a
+ * rule is only 229.75pt wide. ReviewStep shrinks and wraps to make room (see
+ * src/pdfLayout.js), but past two lines at 9pt the tail runs off the end and
+ * is lost from the form the consulate receives — so `ruleField` warns while
+ * the user can still do something about it. The value is deliberately not
+ * capped: an address that long should be flagged, not blocked.
+ *
+ * The warning runs the very same layout routine against the very same font
+ * the PDF is drawn with, so it cannot promise room that step 5 does not have,
+ * and it quotes the measured cut point rather than a fixed character budget —
+ * width is a property of the glyphs, not of how many there are ("Đinđićeva"
+ * and "Illinois" are the same length and nowhere near the same width).
+ *
+ * JMBG is one input rather than thirteen boxes; the 13-digit rule is enforced
+ * in handleJmbgChange, and the PDF is what splits the digits into the
+ * template's cells.
  *
  * @param {Object} props
  * @param {Object} props.formData - form data state object
@@ -30,10 +35,10 @@ import {
  */
 
 function PersonalDataStep({ formData, onFormChange, onSubmit, onPrevious }) {
-    // The font arrives with the rest of the PDF assets, fetched when the app
-    // mounted — long before this screen can be reached. Until it is here
-    // nothing is warned about, which is the right way round: a wrong warning
-    // on a correct address is worse than no warning at all.
+    // The width function comes from the font that was fetched when the app
+    // mounted, so it is normally here before this screen can be reached. While
+    // it is not, `cutAt` returns null and nothing is warned about — the right
+    // way round: a wrong warning on a correct address is worse than none.
     const [measure, setMeasure] = useState(null);
     useEffect(() => {
         let cancelled = false;
@@ -53,8 +58,10 @@ function PersonalDataStep({ formData, onFormChange, onSubmit, onPrevious }) {
         onFormChange({ ...formData, [name]: value });
     };
 
-    // JMBG must stay exactly 13 digits, and a type="number" input ignores both
-    // maxLength and pattern, so the length is enforced here instead.
+    // JMBG is 13 digits by definition. The field is type="text" with a numeric
+    // inputMode rather than type="number", because a number input ignores both
+    // maxLength and pattern — so the filtering and the cap happen here, and
+    // the attributes on the input only back them up for native validation.
     const handleJmbgChange = (e) => {
         const digits = e.target.value.replace(/\D/g, "").slice(0, 13);
         onFormChange({ ...formData, jmbg: digits });

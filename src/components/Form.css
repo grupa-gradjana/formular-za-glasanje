@@ -312,9 +312,8 @@
     border-color: var(--action-primary-active);
 }
 
-/* "Ghost" is the outline tone in the design system: transparent, blue border,
-   blue text — kept under the old class name so every call site does not have
-   to change. */
+/* The outline tone: transparent, blue border, blue text. The secondary action
+   on a screen — "Nazad", and anything that leaves for another page. */
 .btn-ghost {
     background: transparent;
     color: var(--action-primary);

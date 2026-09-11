@@ -3,13 +3,14 @@ import { Cropper } from "react-advanced-cropper";
 import StepHeader from "../StepHeader";
 
 /**
- * Step 3 — add the image, crop it, rotate it, confirm it. This is the
- * old ImageUploadCropStep and ImageConfirmationStep merged: you confirm the
- * crop you are already looking at, which removes a screen that asked "da li je
- * slika dobra?" about an image the user had just approved.
+ * Step 3 — add the image, crop it, rotate it, confirm it. One screen, in two
+ * states: with no `imageSrc` it is the file picker, with one it is the
+ * cropper. The crop is confirmed here rather than on a screen of its own, so
+ * the user approves the image they are looking at.
  *
- * The rotation logic is unchanged from the previous version — only the icon
- * buttons are now plain text glyphs, which drops the @fortawesome dependency.
+ * For a lična karta Form renders this same screen twice, front then back
+ * (see `isCapturingIdBack`), which is why it must stay stateless about the
+ * image — see the note on `imageSrc` below.
  *
  * @param {Object} props
  * @param {string|null} props.imageSrc - raw uploaded image as a data URL
@@ -37,11 +38,11 @@ const PhotoStep = ({
     sideLabel,
     isCapturingIdBack,
 }) => {
-    // `imageSrc` from Form is the only copy of the raw photo. PhotoStep used to
-    // mirror it in local state, which broke the ID card's second pass: the
-    // screen is not unmounted between the front and the back side (both are
-    // step 3), so a mirror initialised from the prop kept showing the front
-    // photo under a "Zadnja strana" heading after Form had already cleared it.
+    // `imageSrc` is read straight from the prop and never mirrored in local
+    // state. The two ID-card passes are both step 3, so this component is not
+    // unmounted between them: a `useState(imageSrc)` copy would survive the
+    // parent clearing the prop and show the front photo again under the
+    // "Zadnja strana" heading.
 
     // The crop rotation is the app's one real animation. A reader who has
     // asked their system for less motion gets the same result without the

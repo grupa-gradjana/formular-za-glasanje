@@ -1,10 +1,12 @@
 import React from "react";
 
 /**
- * Presentational half of the review step. ReviewStep keeps its
- * handleGeneratePDF() exactly as it is (the pdf-lib call, the measured RULES
- * table, the image embedding, the object-URL revoking) and renders this instead
- * of its own JSX — the delicate code and the layout stay separate.
+ * Presentational half of step 5: everything the user checks before the PDF is
+ * made. Split out so that the delicate part — the measured coordinates and the
+ * pdf-lib run in ReviewStep — and the layout can be changed independently.
+ *
+ * Holds no state and makes no decisions beyond what to show: the parent owns
+ * the generation, its progress and its failure, and passes all three in.
  *
  * @param {Object} props
  * @param {Object} props.formData - all eight fields

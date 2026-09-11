@@ -12,13 +12,12 @@ import ReviewStep from "./steps/ReviewStep";
 import DoneStep from "./steps/DoneStep";
 
 /**
- * All app state + step routing (the hub), unchanged in spirit from the previous
- * version: one linear wizard driven by a single `step` integer, everything held
- * in React state, nothing serialized anywhere.
+ * The hub: every piece of app state and the step routing. One linear wizard
+ * driven by a single `step` integer, everything held in React state and
+ * nothing serialized anywhere — which is what keeps "nothing persists"
+ * trivially true. No store, no context outliving the tree.
  *
- * What changed is the presentation: the seven screens are grouped into THREE
- * named stages, and the old separate confirmation screen is folded into the
- * photo screen (you confirm the crop you are looking at).
+ * Seven screens, grouped into the three named stages `StepHeader` draws:
  *
  *   step 0  Welcome                       (no stage bar)
  *   step 1  Vaši podaci        → stage 1
@@ -28,8 +27,11 @@ import DoneStep from "./steps/DoneStep";
  *                                            ChipIdCardStep instead — nothing
  *                                            to photograph, see that file)
  *   step 4  Potpis             → stage 3
- *   step 5  Pregled i preuzimanje
- *   step 6  Šta sad (posle preuzimanja)
+ *   step 5  Pregled i preuzimanje          (builds the PDF)
+ *   step 6  Šta sad (posle preuzimanja)    (downloads it)
+ *
+ * Steps 2 and 3 share stage 2, so the "KORAK n OD 3" line does not change when
+ * the user moves between them.
  *
  * @param {Object} props
  * @param {Function} props.onOpenTrust - open the "Kako da proverite ovu stranicu" page
@@ -66,25 +68,23 @@ const Form = ({ onOpenTrust }) => {
     // ID card: 1.66, passport: 1.44 — measured from the documents themselves.
     const getAspectRatio = () => (docType === "licna-karta" ? 1.66 : 1.44);
 
-    // Every navigation lands at the top of the new screen. Two details of this
-    // are not decoration:
+    // Every navigation lands at the top of the new screen. Three details of
+    // the effect below are load-bearing:
     //
-    //  - The scroll runs in a layout effect, i.e. AFTER React has swapped the
-    //    step in, never inside the click handler. Fired before the commit it
-    //    races the layout change that immediately follows it, and the browser
-    //    resolves that race by keeping the old offset — intermittently, which
-    //    is why it looked like "sometimes it works". Step 0 -> 1 is where it
-    //    shows, because the welcome screen is the only one tall enough that
-    //    the user is always far down the page when they leave it.
+    //  - It is a layout effect, so the scroll runs AFTER React has swapped the
+    //    step in, never inside the click handler. Scrolling before the commit
+    //    races the layout change that follows it, and the browser settles that
+    //    race by keeping the old offset. Step 0 -> 1 is where it shows: the
+    //    welcome screen is the only one tall enough that the user is always
+    //    far down the page when they leave it.
     //  - The scroll is instant, not smooth. A smooth animation is still
     //    running while the new screen mounts, and anything the browser does in
     //    the meantime — scroll anchoring on the changed document height, focus
     //    leaving the button that was just unmounted — cancels it silently and
     //    leaves the user in the middle of a screen they have never seen.
-    //
-    // `navSeq` rather than `step` is the dependency because confirming the
-    // front of a lična karta re-enters step 3 from step 3, and that navigation
-    // has to scroll like any other.
+    //  - The dependency is `navSeq`, not `step`: confirming the front of a
+    //    lična karta re-enters step 3 from step 3, and that navigation has to
+    //    scroll like any other.
     const [navSeq, setNavSeq] = useState(0);
 
     useLayoutEffect(() => {
@@ -142,9 +142,11 @@ const Form = ({ onOpenTrust }) => {
         handleNextStep(3, "Vaš dokument: očitana lična karta");
     };
 
-    // The crop is confirmed on the photo screen itself. For a lična karta the
-    // screen runs a second time for the back side — the single most breakable
-    // part of the navigation, so re-test both document types after touching it.
+    // The crop is confirmed on the photo screen itself, so this receives a
+    // finished image. A lična karta needs two of them: the first confirmation
+    // sends the user back through the same step 3 with `isCapturingIdBack`
+    // set and `imageSrc` cleared, a passport goes straight on to the
+    // signature. Re-test all three document paths after touching this.
     const handlePhotoConfirmed = (img) => {
         if (isCapturingIdBack) {
             setCroppedImageBack(img);

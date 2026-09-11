@@ -1,9 +1,14 @@
 import React from "react";
 
 /**
- * Screen header: the origin strip is elsewhere (App), this is the per-screen
- * "where am I" line. Three stages, three bars — the label never changes inside
- * a stage, so the reader is not told they moved when they did not.
+ * The per-screen "where am I" line: an eyebrow and three bars, one per stage.
+ * (The site-wide chrome — lockup, trust link, origin strip — is SiteHeader's.)
+ *
+ * The unit is the stage, not the step: the wizard's seven screens map onto
+ * three stages, and steps 2 and 3 share one, so the caller passes the stage it
+ * belongs to and the reader is not told they moved when they did not. The bars
+ * are decorative; the same "Korak n od 3" is given to screen readers in the
+ * sr-only paragraph below them.
  *
  * @param {Object} props
  * @param {number} props.stage - 1-based stage the user is in (1..3)

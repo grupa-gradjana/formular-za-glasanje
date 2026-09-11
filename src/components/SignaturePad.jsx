@@ -2,11 +2,21 @@ import React, { useState, useRef, useEffect } from "react";
 import "./Form.css";
 
 /**
- * Draw and capture a signature. All the canvas logic here is unchanged from the
- * previous version: fixed 1200x400 internal surface, display size derived from
- * the container (full width, 3:1), bounding-box crop on submit, keyboard
- * fallback on Enter/Space.
- * Only the surrounding markup and labels are new.
+ * Draw and capture a signature.
+ *
+ * The canvas has a fixed 1200x400 internal surface and is displayed at
+ * whatever width the container gives it, keeping that 3:1 ratio; pointer and
+ * touch coordinates are scaled from the displayed box into the internal one
+ * (getScalingFactor). Drawing at a constant resolution means the PNG handed to
+ * the PDF is the same quality on a phone as on a desktop.
+ *
+ * On submit the drawing is cropped to the bounding box of its ink, so the PDF
+ * gets the signature rather than a mostly-empty rectangle that would have to
+ * be letterboxed into the form's signature box.
+ *
+ * Enter or Space on the focused canvas draws a stock curve: a signature is a
+ * required field, and a keyboard-only user must not be stranded behind a
+ * disabled button. SignatureStep says so in words as well.
  *
  * @param {Object} props
  * @param {Function} props.onSubmit - receives the signature PNG data URL

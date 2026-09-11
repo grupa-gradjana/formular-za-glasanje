@@ -16,13 +16,12 @@
 # only used to render the result for a visual check.
 #
 # A test run leaves nothing on the device, which is the same property the app
-# itself promises. Nothing has to be intercepted to keep it that way any more:
-# the app never triggers a download by itself: the file is saved only when the
-# user taps the <a download> on the final screen. This script therefore reads
-# that link's blob instead of clicking it, and checks ~/Downloads stayed as it
-# was. Do not "fix" it by clicking the link: `execute` runs in an ISOLATED
-# world, so the click would be a real one and would write the PDF to
-# ~/Downloads for real.
+# itself promises. The app never starts a download on its own — the file is
+# saved only when the user taps the <a download> on the final screen — so this
+# script reads that link's attributes and fetches its blob instead of clicking
+# it, and afterwards checks that ~/Downloads is as it was. Do not "fix" it by
+# clicking the link: `execute` runs in an ISOLATED world, so the click would be
+# a real one and would write the PDF to ~/Downloads for real.
 #
 # Two chrome-cli facts this script is built around, both easy to trip over:
 #   1. `execute` must return a string. Returning a number crashes chrome-cli.
@@ -40,8 +39,8 @@ DOC_ARG="${1:-all}"
 KEEP=""
 [ "${2:-}" = "--keep" ] && KEEP=1
 OUT="$(mktemp -d)"
-# Read the download name out of the source rather than repeating it here: the
-# two drifted apart once already, and a stale copy fails the run on the last
+# Read the download name out of the source rather than repeating it here. A
+# copy that has drifted from src/pdfAssets.js fails the run on the very last
 # assertion, long after the interesting part has passed.
 PDF_FILE_NAME="$(sed -n 's/^ *"\{0,1\}\(Zahtev[^"]*\.pdf\)".*/\1/p' "$ROOT/src/pdfAssets.js" | head -1)"
 TAB=""
@@ -132,8 +131,8 @@ upload() { # $1 = label drawn on the synthetic document image
         var inp=document.getElementById('image-upload');inp.files=dt.files;
         inp.dispatchEvent(new Event('change',{bubbles:true}));return 'ok';})()" >/dev/null
     waitfor "(function(){return [...document.querySelectorAll('button')].some(b=>b.textContent.indexOf('Potvrdite sliku')>=0)?'y':'';})()" "cropper" || return 1
-    # The crop is confirmed on the photo screen itself - there is no separate
-    # confirmation screen any more, so this is one click per side, not two.
+    # The crop is confirmed on the photo screen itself, so this is one click
+    # per side, not a crop click followed by a confirmation screen.
     click "Potvrdite sliku" || return 1
 }
 

@@ -11,15 +11,14 @@ function App() {
     // without losing form state (the wizard stays mounted underneath).
     const [showTrust, setShowTrust] = useState(false);
 
-    // Every wizard step lands at the top of the screen; opening and closing the
-    // trust page is the same kind of navigation, so it has to do it too.
-    // Without this the trust page opens half-way down — the link to it sits at
-    // the bottom of the welcome screen — and coming back leaves the wizard
-    // scrolled just as far. It runs after the swap and without an animation for
-    // the reasons written out over the same effect in Form.jsx; keep the two in
-    // step.
     const goTo = (trust) => setShowTrust(trust);
 
+    // Opening or closing the trust page is a navigation like any wizard step,
+    // so it lands at the top of the new screen. The link into it sits at the
+    // foot of the welcome screen, so without this the trust page opens
+    // half-way down and coming back leaves the wizard scrolled just as far.
+    // Layout effect and instant scroll, for the same two reasons spelled out
+    // over the matching effect in Form.jsx; keep the two in step.
     const firstRender = useRef(true);
     useLayoutEffect(() => {
         if (firstRender.current) {

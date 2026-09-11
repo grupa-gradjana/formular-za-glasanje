@@ -3,7 +3,9 @@ import AboutPanel from "../AboutPanel";
 
 /**
  * Step 0. Answers "what is this, is it safe, what will it cost me" before
- * asking for a single field.
+ * asking for a single field. The privacy panel is phrased as what the page
+ * does not do, each claim being something the reader can go and check —
+ * TrustPage, reachable from here and from the header, shows them how.
  *
  * @param {Object} props
  * @param {Function} props.onNext - advance to the personal data step
@@ -18,10 +20,6 @@ function WelcomeStep({ onNext, onOpenTrust }) {
             >
                 Popunite zahtev za glasanje iz inostranstva
             </h1>
-            {/* The brand's connector hairline — a red rule ending in a node,
-                echoing the mark. Decoration, so it is hidden from the reader
-                who is being read to. */}
-
             <p className="lead mb-7 max-w-[46ch]">
                 Ovaj stranica vam pomaže da samo za nekoliko minuta popunite i
                 pripremite zvaničan formular-zahtev za glasanje iz inostranstva
