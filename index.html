@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="sr-Latn">
+
+<head>
+    <meta charset="UTF-8" />
+    <!--
+      The privacy invariants of this app, stated so the browser enforces them
+      instead of relying on review alone. `connect-src 'self' data: blob:` is
+      the important one: it makes it impossible for this page — or for any
+      dependency that ends up bundled into it — to send the JMBG, the ID scans
+      or the signature to another origin. data:/blob: are needed because the
+      app reads its own in-memory images back with fetch(); neither touches the
+      network. `form-action 'none'` covers the native fallback: if the React
+      submit handler ever fails to run, the form cannot GET the personal data
+      back to the server as a query string.
+      frame-ancestors is not honoured in a <meta> CSP — send it (and ideally
+      this whole policy) as a response header at deploy time.
+    -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self';
+      script-src 'self';
+      style-src 'self' 'unsafe-inline';
+      img-src 'self' data: blob:;
+      font-src 'self';
+      connect-src 'self' data: blob:;
+      form-action 'none';
+      base-uri 'none';
+      object-src 'none'" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zahtev za glasanje u inostranstvu</title>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+</body>
+
+</html>

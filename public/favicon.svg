@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Formular za glasanje">
+    <!-- Square and blue-700: the identity has no rounded corners and no fifth
+         colour. The mark itself is raster-only artwork, so it is not used here. -->
+    <rect width="32" height="32" fill="#0C4076" />
+    <path d="M9 16.5l5 5 9-11" fill="none" stroke="#fff" stroke-width="4"
+        stroke-linecap="round" stroke-linejoin="round" />
+</svg>

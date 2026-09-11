@@ -1,0 +1,583 @@
+/* Shared component classes, in the "Skupština u rasejanju" identity.
+   Colours come from the tokens declared in src/index.css, so a class reads as
+   its role and the dark theme is one block of variable swaps rather than a
+   `dark:` twin on every rule (see the note over that block). Only the handful
+   of places that need a different *shape* in the dark carry a `dark:` variant.
+
+   Shape rules, from the design system: radius 0 everywhere except buttons
+   (full pill) and the radio dot; no shadows; serif (Piazzolla) for headings
+   and body, sans for UI chrome — labels, buttons, hints, captions, meta. */
+
+/* --- Page shell ---------------------------------------------------------- */
+.page {
+    @apply flex min-h-screen flex-col;
+    background: var(--surface-page);
+}
+
+/* The wizard column. 760px is the only breakpoint concern in the design. */
+.shell {
+    @apply mx-auto w-full max-w-[760px] px-6 pb-16 pt-10;
+}
+
+/* --- Global chrome ------------------------------------------------------- */
+.site-header {
+    @apply sticky top-0 z-20;
+    background: var(--surface-page);
+    box-shadow: 0 1px 0 rgba(12, 64, 118, 0.12);
+}
+
+.site-header-row {
+    @apply mx-auto flex w-full max-w-[760px] items-center justify-between gap-4 px-6 py-3.5 sm:gap-6;
+}
+
+/* Sans caps, blue, red on hover — the same treatment as the trust page's own
+   back link, so the pair reads as one control. */
+/* Right-aligned and allowed to wrap: at 320px the wordmark and this label do
+   not both fit on one line, and the lockup is the half that must not break. */
+.chrome-link {
+    @apply bg-transparent p-0 text-right font-sans text-[12px] font-bold uppercase leading-[1.35] tracking-[0.08em] no-underline;
+    border: 0;
+    color: var(--text-body);
+    transition: color var(--duration-fast) var(--ease-standard);
+}
+
+.chrome-link:hover {
+    color: var(--text-accent);
+}
+
+/* "NIJE DRŽAVNA STRANICA · NAPRAVILA SKUPŠTINA U RASEJANJU" — under the
+   header, on every screen. */
+.origin-strip {
+    @apply m-0 px-6 py-2 text-center font-sans text-[11px] font-bold uppercase leading-normal tracking-[0.18em];
+    color: var(--text-muted);
+    border-top: 1px solid var(--line-rule);
+    border-bottom: 1px solid var(--line-rule);
+}
+
+/* The red band that closes the foot of every page in the identity. */
+.foot-band {
+    @apply h-2.5 w-full flex-none;
+    background: var(--red-500);
+}
+
+/* A hairline divider that follows the theme, for the handful of dividers that
+   are not part of a component class. */
+.rule-top {
+    border-top: 1px solid var(--line-rule);
+}
+
+.rule-bottom {
+    border-bottom: 1px solid var(--line-rule);
+}
+
+/* --- Type ---------------------------------------------------------------- */
+/* Eyebrow: serif, widely letterspaced caps, the screen's single red accent. */
+.eyebrow {
+    @apply font-serif text-[14px] font-medium uppercase leading-normal tracking-[0.18em];
+    color: var(--text-accent);
+}
+
+.h1 {
+    @apply font-serif text-[32px] font-bold leading-[1.15] tracking-[-0.01em] sm:text-[38px];
+    color: var(--text-heading);
+}
+
+.h2 {
+    @apply font-serif text-[28px] font-bold leading-[1.2] sm:text-[34px];
+    color: var(--text-heading);
+}
+
+.h3 {
+    @apply font-serif text-[20px] font-bold leading-[1.25] sm:text-[22px];
+    color: var(--text-heading);
+}
+
+/* The title of a row in a numbered list — a step smaller than a real h3. */
+.item-title {
+    @apply font-serif text-[20px] font-bold leading-[1.25];
+    color: var(--text-heading);
+}
+
+.lead {
+    @apply max-w-[48ch] font-serif text-[19px] font-normal leading-[1.55] sm:text-[20px];
+    color: var(--text-body);
+}
+
+.body {
+    @apply max-w-[52ch] font-serif text-[17px] leading-[1.6];
+    color: var(--text-body);
+}
+
+/* Explanatory line under a row of actions: what the primary button leads to.
+   Sans, muted — chrome about the journey, not part of the zahtev. */
+.form-actions-hint {
+    @apply mt-4 font-sans text-[14px] leading-[1.5];
+    color: var(--text-muted);
+}
+
+/* The paragraph pulled out by a 4px red rule down its left edge. */
+.pulled {
+    @apply flex items-stretch gap-5;
+}
+
+.pulled::before {
+    content: "";
+    @apply w-1 flex-none;
+    background: var(--red-500);
+}
+
+/* The brand's connector hairline: a rule ending in a node. */
+.node-line {
+    @apply flex items-center;
+    width: 220px;
+    height: 14px;
+}
+
+.node-line::before {
+    content: "";
+    @apply h-0.5 flex-1;
+    background: var(--red-500);
+}
+
+.node-line::after {
+    content: "";
+    @apply h-3.5 w-3.5 flex-none rounded-full;
+    background: var(--red-500);
+}
+
+/* --- Deadline cards ------------------------------------------------------ */
+/* The two solid brand blocks on the welcome screen: the date the zahtev
+   should be sent by, and the date after which it is too late. Square, no
+   shadow, white ink on the two official colours, each closed by the same
+   connector hairline as the rest of the identity — read as one pair, so they
+   stack rather than shrink on a narrow screen. */
+.deadline-cards {
+    @apply grid grid-cols-1 gap-3 sm:grid-cols-2;
+}
+
+.deadline-card {
+    @apply flex flex-col px-6 pb-5 pt-6 sm:px-7 sm:pb-6 sm:pt-7;
+    color: #ffffff;
+}
+
+.deadline-card-early {
+    background: var(--surface-inverse);
+    border: 1px solid var(--surface-inverse);
+}
+
+.deadline-card-last {
+    background: var(--red-500);
+    border: 1px solid var(--red-500);
+}
+
+/* In dark mode the blue block sits a single step off the page colour, the
+   same problem .panel has — give it the same hairline rather than a fifth
+   hue. The red block needs none; it is nowhere near the ground. */
+@media (prefers-color-scheme: dark) {
+    .deadline-card-early {
+        border-color: var(--blue-300);
+    }
+}
+
+.deadline-label {
+    @apply m-0 font-sans text-[12px] font-bold uppercase leading-normal tracking-[0.14em] sm:text-[13px];
+}
+
+.deadline-date {
+    @apply m-0 mt-1.5 font-serif text-[36px] font-black leading-[1.1] tracking-[-0.01em] sm:text-[34px];
+}
+
+/* The connector that closes each card: a hollow node with the rule running
+   off to the right. Decoration — the dates above already say everything. */
+.deadline-node {
+    @apply mt-5 flex items-center sm:mt-6;
+    height: 14px;
+}
+
+.deadline-node::before {
+    content: "";
+    @apply h-3.5 w-3.5 flex-none rounded-full border-2;
+    border-color: currentColor;
+}
+
+.deadline-node::after {
+    content: "";
+    @apply h-0.5 flex-1;
+    background: currentColor;
+}
+
+/* One accent per screen: on the blue block the connector is red, on the red
+   block it is the white it is drawn on. */
+.deadline-card-early .deadline-node {
+    color: var(--red-500);
+}
+
+/* --- Progress ------------------------------------------------------------ */
+.stage-bars {
+    @apply flex gap-1;
+}
+
+.stage-bar {
+    @apply h-1.5 flex-1;
+    background: var(--line-rule);
+}
+
+.stage-bar-done {
+    background: var(--action-primary);
+}
+
+/* --- Fields -------------------------------------------------------------- */
+.form-group {
+    @apply flex flex-col gap-2;
+}
+
+.form-stack {
+    @apply flex flex-col gap-[22px];
+}
+
+.form-label {
+    @apply block font-sans text-[13px] font-bold uppercase leading-normal tracking-[0.06em];
+    color: var(--text-body);
+}
+
+.form-input {
+    @apply box-border w-full px-3.5 py-3 font-serif text-[17px];
+    color: var(--text-body);
+    background: var(--surface-page);
+    border: 1px solid var(--line-input);
+    transition: border-color var(--duration-fast) var(--ease-standard);
+}
+
+.form-input:focus {
+    outline: none;
+    border: 2px solid var(--action-primary);
+    /* The 2px border would shift the text by a pixel on focus; the padding
+       gives it back. */
+    padding: calc(0.75rem - 1px) calc(0.875rem - 1px);
+}
+
+.form-input:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+}
+
+/* JMBG: thirteen digits stay countable when they are spaced out. No monospace
+   face — the identity has none, and the sans is what the design uses for
+   anything that is read as data rather than as prose. */
+.form-input-digits {
+    @apply font-sans text-[18px] tracking-[0.14em];
+}
+
+.form-input-warn {
+    border-color: var(--red-500);
+}
+
+.field-hint {
+    @apply font-sans text-[14px] leading-[1.5];
+    color: var(--text-muted);
+}
+
+.field-warn {
+    @apply flex gap-2 font-sans text-[14px] leading-[1.5];
+    color: var(--text-accent);
+}
+
+/* --- Buttons -------------------------------------------------------------
+   Pill, sans, bold, letterspaced caps. `lg` is the 56px full-width action at
+   the foot of a screen; the bare `.btn` is the 44px inline one. */
+.btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-pill px-8 py-3.5 text-center font-sans text-[14px] font-bold uppercase leading-none tracking-[0.08em] no-underline;
+    transition:
+        background var(--duration-fast) var(--ease-standard),
+        color var(--duration-fast) var(--ease-standard);
+}
+
+.btn-lg {
+    @apply px-10 py-[18px] text-[16px];
+}
+
+.btn-primary {
+    background: var(--action-primary);
+    color: var(--action-primary-ink);
+    border: 2px solid var(--action-primary);
+}
+
+.btn-primary:hover {
+    background: var(--action-primary-hover);
+    border-color: var(--action-primary-hover);
+}
+
+.btn-primary:active {
+    background: var(--action-primary-active);
+    border-color: var(--action-primary-active);
+}
+
+/* "Ghost" is the outline tone in the design system: transparent, blue border,
+   blue text — kept under the old class name so every call site does not have
+   to change. */
+.btn-ghost {
+    background: transparent;
+    color: var(--action-primary);
+    border: 2px solid var(--line-input);
+}
+
+.btn-ghost:hover {
+    background: var(--action-outline-hover);
+    border-color: var(--action-primary);
+}
+
+.btn-ghost:active {
+    background: var(--action-outline-active);
+}
+
+.btn-disabled {
+    background: var(--action-disabled);
+    color: var(--action-disabled-ink);
+    border: 2px solid var(--action-disabled);
+    @apply cursor-not-allowed;
+}
+
+.btn-block {
+    @apply flex w-full;
+}
+
+/* Primary on top, Nazad below, 12px apart. */
+.form-actions {
+    @apply mt-7 flex flex-col gap-3;
+}
+
+/* --- Blocks -------------------------------------------------------------- */
+/* The blue panel. White ink, no border, no radius — the identity's one solid
+   field of colour. In the dark theme the ground is already blue, so the panel
+   is lifted a step and outlined instead of relying on fill alone. */
+.panel {
+    @apply p-7;
+    background: var(--surface-inverse);
+    color: #ffffff;
+    border: 1px solid var(--surface-inverse);
+}
+
+@media (prefers-color-scheme: dark) {
+    .panel {
+        border-color: var(--blue-300);
+    }
+}
+
+.panel .h3,
+.panel .item-title {
+    color: #ffffff;
+}
+
+.panel .body {
+    color: #ffffff;
+}
+
+/* The quiet panel: blue-050 fill, ordinary ink. */
+.panel-quiet {
+    @apply px-6 py-[22px];
+    background: var(--surface-subtle);
+}
+
+.panel-error {
+    @apply px-5 py-[18px];
+    background: var(--surface-page);
+    border: 1px solid var(--line-rule);
+    border-left: 4px solid var(--red-500);
+}
+
+.deny-list {
+    @apply flex flex-col gap-3 font-serif text-[17px] leading-[1.5];
+}
+
+.deny-item {
+    @apply flex gap-3;
+}
+
+.deny-mark {
+    @apply flex-none font-sans font-bold;
+    color: var(--text-accent);
+}
+
+/* Inside the blue panel the ✕ is white: red would be a second accent on a
+   ground the panel already owns. */
+.panel .deny-mark {
+    color: #ffffff;
+}
+
+/* Numbered step list used on the welcome, chip, trust and done screens. */
+.numbered-list {
+    @apply m-0 list-none p-0;
+    border-top: 1px solid var(--line-rule);
+}
+
+.numbered-row {
+    @apply flex gap-5 py-5;
+    border-bottom: 1px solid var(--line-rule);
+}
+
+.numbered-index {
+    @apply w-7 flex-none font-serif text-[30px] font-bold leading-none;
+    color: var(--text-accent);
+}
+
+/* --- Document choice ----------------------------------------------------- */
+.choice {
+    @apply flex w-full items-center gap-[18px] p-5 text-left;
+    background: var(--surface-page);
+    border: 1px solid var(--line-input);
+    transition:
+        background var(--duration-base) var(--ease-standard),
+        border-color var(--duration-base) var(--ease-standard);
+}
+
+.choice-selected {
+    background: var(--surface-subtle);
+    border: 2px solid var(--action-primary);
+    /* Keep the row the same height when the border thickens. */
+    padding: calc(1.25rem - 1px);
+}
+
+.choice-radio {
+    @apply flex h-7 w-7 flex-none items-center justify-center rounded-full font-sans text-[14px] font-bold;
+    border: 2px solid var(--line-input);
+}
+
+.choice-radio-selected {
+    background: var(--action-primary);
+    border-color: var(--action-primary);
+    color: var(--action-primary-ink);
+}
+
+.choice-title {
+    @apply block font-serif text-[21px] font-bold leading-[1.25];
+    color: var(--text-heading);
+}
+
+.choice-hint {
+    @apply mt-1 block font-sans text-[14px] leading-[1.45];
+    color: var(--text-muted);
+}
+
+/* A link that is really an in-page action, not a URL: the disclosure on the
+   document choice and the two routes out of it. Kept a real <button> so the
+   e2e script (which clicks buttons by their visible text) can reach it. */
+.link-button {
+    @apply bg-transparent p-0 text-left font-serif text-[17px] underline;
+    border: 0;
+    text-underline-offset: 3px;
+    color: var(--text-body);
+    transition: color var(--duration-fast) var(--ease-standard);
+}
+
+.link-button:hover {
+    color: var(--text-accent);
+}
+
+/* --- Camera / cropper ---------------------------------------------------- */
+.cropper-container {
+    @apply relative w-full overflow-hidden;
+    height: 320px;
+    background: var(--blue-900);
+}
+
+.rotate-row {
+    @apply flex gap-2;
+}
+
+.rotate-btn {
+    @apply flex-1 py-3.5 font-sans text-[14px] font-bold;
+    background: var(--surface-page);
+    color: var(--action-primary);
+    border: 1px solid var(--line-input);
+    transition: background var(--duration-fast) var(--ease-standard);
+}
+
+.rotate-btn:hover {
+    background: var(--action-outline-hover);
+}
+
+.rotate-slider {
+    @apply h-8 flex-1;
+    accent-color: var(--action-primary);
+}
+
+.rotate-scale {
+    @apply font-sans text-[12px];
+    color: var(--text-muted);
+}
+
+/* --- Signature ----------------------------------------------------------- */
+.signature-container {
+    @apply w-full max-w-full;
+}
+
+/* White ground in both themes: what you see is what prints. */
+.signature-canvas {
+    @apply block w-full touch-none bg-white;
+    border: 1px solid var(--line-border);
+    cursor: crosshair;
+}
+
+.signature-guide {
+    @apply pointer-events-none absolute left-6 right-6 bottom-12;
+    border-bottom: 1px solid var(--blue-300);
+}
+
+.signature-placeholder {
+    @apply pointer-events-none absolute left-6 bottom-5 font-sans text-[14px];
+    color: var(--grey-400);
+}
+
+/* --- Review -------------------------------------------------------------- */
+.review-list {
+    @apply m-0;
+    border-top: 1px solid var(--line-rule);
+}
+
+.review-row {
+    @apply flex flex-col gap-1 py-3.5 sm:grid sm:grid-cols-[minmax(0,220px)_minmax(0,1fr)] sm:gap-5;
+    border-bottom: 1px solid var(--line-rule);
+}
+
+.review-key {
+    @apply font-sans text-[13px] font-bold uppercase leading-[1.5] tracking-[0.06em];
+    color: var(--text-muted);
+}
+
+.review-value {
+    @apply font-serif text-[19px] leading-[1.5];
+    color: var(--text-body);
+    overflow-wrap: break-word;
+}
+
+.review-missing {
+    color: var(--text-accent);
+}
+
+.preview-image {
+    @apply bg-white;
+    border: 1px solid var(--line-rule);
+}
+
+.preview-caption {
+    @apply mt-2 font-sans text-[13px];
+    color: var(--text-muted);
+}
+
+/* --- Done ---------------------------------------------------------------- */
+.download-row {
+    @apply flex flex-wrap items-center gap-[18px] p-5;
+    background: var(--surface-page);
+    border: 1px solid var(--line-border);
+}
+
+.download-chip {
+    @apply flex-none px-2 py-2.5 font-sans text-[11px] font-bold tracking-[0.08em] text-white;
+    background: var(--red-500);
+}
+
+.download-name {
+    @apply m-0 font-sans text-[15px] font-bold leading-[1.35];
+    color: var(--text-heading);
+    overflow-wrap: break-word;
+}

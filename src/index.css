@@ -1,0 +1,228 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* --- Piazzolla ------------------------------------------------------------
+   The identity's typeface, carrying headings and body copy alike. The design
+   system pulls it from Google Fonts; that is a third-party runtime origin
+   (invariant 4) and the page's own `font-src 'self'` policy would block it
+   anyway, so the two subsets the Serbian Latin alphabet needs are bundled
+   instead. latin-ext is not optional: č ć đ š ž all live in U+0100–017F.
+   Both are variable faces covering 400–700, so one file per subset serves
+   every weight the design uses.
+
+   Licence: SIL Open Font License 1.1. Clause 2 lets the binaries be bundled
+   and redistributed with any software "provided that each copy contains the
+   above copyright notice and this license" — the woff2 carries the copyright
+   string and a URL, but not the licence text, so the full text ships as
+   public/Piazzolla-OFL.txt and is served with the site. Keep that file
+   wherever these binaries go. */
+@font-face {
+    font-family: "Piazzolla";
+    font-style: normal;
+    font-weight: 400 700;
+    font-display: swap;
+    src: url("./assets/fonts/piazzolla-latin-ext.woff2") format("woff2");
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7,
+        U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F,
+        U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
+        U+A720-A7FF;
+}
+
+@font-face {
+    font-family: "Piazzolla";
+    font-style: normal;
+    font-weight: 400 700;
+    font-display: swap;
+    src: url("./assets/fonts/piazzolla-latin.woff2") format("woff2");
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+        U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+        U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* --- Design tokens --------------------------------------------------------
+   Transcribed from the design system's tokens/*.css. Values that never change
+   between themes (the four official colours) stay literal; the ones the dark
+   theme swaps are read through these variables so a colour is defined once.
+
+   The brand book defines no dark palette, so the dark theme below is an
+   extension rather than brand law: it keeps to the same tokens (blue-900
+   ground, white ink, the red-300 tint where red-500 would be unreadable on
+   dark) and invents no fifth hue. */
+:root {
+    --blue-900: #082c51;
+    --blue-800: #0a3663;
+    --blue-700: #0c4076;
+    --blue-600: #124e8c;
+    --blue-300: #7c9bbb;
+    --blue-100: #d3dee9;
+    --blue-050: #edf2f7;
+    --red-700: #9e2a2f;
+    --red-600: #b22f35;
+    --red-500: #c6363c;
+    --red-300: #de8a8d;
+    --grey-600: #5c5c5c;
+    --grey-400: #9aa3ab;
+    --grey-200: #e2e5e8;
+
+    --surface-page: #ffffff;
+    --surface-subtle: var(--blue-050);
+    --surface-inverse: var(--blue-700);
+    --text-heading: var(--blue-700);
+    --text-body: var(--blue-700);
+    --text-muted: var(--grey-600);
+    --text-accent: var(--red-500);
+    --line-rule: var(--grey-200);
+    --line-border: var(--blue-700);
+    --line-input: var(--blue-300);
+    --focus-ring: var(--red-500);
+    --action-primary: var(--blue-700);
+    --action-primary-hover: var(--blue-800);
+    --action-primary-active: var(--blue-900);
+    --action-primary-ink: #ffffff;
+    --action-outline-hover: var(--blue-050);
+    --action-outline-active: var(--blue-100);
+    /* A disabled action is "reduced-contrast blue fill" in the design. White
+       on blue-300 comes out at 2.9:1, though, and the label of a button the
+       reader cannot press is exactly the text they need to read; blue-900 on
+       the same fill keeps the washed-out look at 4.8:1. */
+    --action-disabled: var(--blue-300);
+    --action-disabled-ink: var(--blue-900);
+
+    --ease-standard: cubic-bezier(0.2, 0, 0.2, 1);
+    --duration-fast: 120ms;
+    --duration-base: 200ms;
+
+    font-family: "Piazzolla", Georgia, "Times New Roman", serif;
+    font-size: 17px;
+    line-height: 1.6;
+    font-weight: 400;
+
+    color-scheme: light dark;
+    color: var(--text-body);
+    background-color: var(--surface-page);
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --surface-page: var(--blue-900);
+        --surface-subtle: var(--blue-800);
+        --surface-inverse: var(--blue-800);
+        --text-heading: #ffffff;
+        --text-body: var(--blue-050);
+        --text-muted: var(--blue-300);
+        --text-accent: var(--red-300);
+        --line-rule: #17456f;
+        --line-border: var(--blue-300);
+        --line-input: var(--blue-300);
+        --focus-ring: var(--red-300);
+        --action-primary: #ffffff;
+        --action-primary-hover: var(--blue-050);
+        --action-primary-active: var(--blue-100);
+        --action-primary-ink: var(--blue-900);
+        --action-outline-hover: var(--blue-800);
+        --action-outline-active: var(--blue-700);
+        --action-disabled: #17456f;
+        --action-disabled-ink: var(--blue-300);
+    }
+}
+
+body {
+    margin: 0;
+    min-width: 320px;
+    width: 100%;
+    min-height: 100vh;
+    background-color: var(--surface-page);
+    color: var(--text-body);
+    text-wrap: pretty;
+}
+
+/* Square corners everywhere — the design reads as a printed form, not as an
+   app. Buttons are the one exception and opt back in with `.btn`. */
+button,
+input,
+select,
+textarea {
+    font-family: inherit;
+    border-radius: 0;
+}
+
+button {
+    cursor: pointer;
+}
+
+/* Focus is a 2px red ring at 2px offset, and is never removed. */
+button:focus-visible,
+a:focus-visible,
+label:focus-visible,
+input:focus-visible,
+[tabindex]:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+}
+
+a {
+    color: var(--text-body);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+    transition: color var(--duration-fast) var(--ease-standard);
+}
+
+a:hover {
+    color: var(--text-accent);
+}
+
+/* --- Cropper --------------------------------------------------------------
+   react-advanced-cropper ships its own chrome in black; these override it to
+   the brand's crop stage — blue-900 backdrop, white guides, square handles.
+   Every selector is scoped under `.cropper-container`, which both raises the
+   specificity above the package's own rules (its stylesheet is imported from
+   Form.jsx and may land after this file) and keeps the overrides where the
+   cropper actually lives. */
+.cropper-container .advanced-cropper,
+.cropper-container .advanced-cropper-boundary {
+    background: var(--blue-900);
+}
+
+/* The scrim over everything outside the crop box: blue-900 rather than the
+   package's black, so the whole stage is one colour from the brand. */
+.cropper-container .advanced-cropper-stencil-overlay {
+    color: rgba(8, 44, 81, 0.72);
+}
+
+/* The crop box itself is the guide frame the design asks for: white lines,
+   square handles (the package leaves them square, so this only sets colour). */
+.cropper-container .advanced-cropper-simple-handler {
+    background: #ffffff;
+    border-radius: 0;
+}
+
+.cropper-container .advanced-cropper-simple-line {
+    border-color: rgba(255, 255, 255, 0.9);
+}
+
+.cropper-container .advanced-cropper-simple-line--hover {
+    border-color: #ffffff;
+}
+
+.cropper-container .advanced-cropper-stencil-grid {
+    color: rgba(255, 255, 255, 0.45);
+}
+
+/* The crop rotation is the only real animation in the app; a reader who has
+   asked for less motion gets the same result without the sweep. */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
