@@ -1,5 +1,6 @@
 import React from "react";
 import AboutPanel from "./AboutPanel";
+import MfaListNotice, { MFA_EMBASSY_LIST_URL } from "./MfaListNotice";
 
 /**
  * "Kako da proverite ovu stranicu" — reachable from every screen, mounted
@@ -136,10 +137,11 @@ function TrustPage({ onBack }) {
                         Prazan zahtev (PDF)
                     </a>
                     <a
-                        href="https://www.mfa.gov.rs/predstavnistva/predstavnistva-srbije-u-svetu/ambasade"
+                        href={MFA_EMBASSY_LIST_URL}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="btn btn-ghost"
+                        aria-describedby="mfa-notice-trust"
                     >
                         Spisak ambasada i konzulata
                         <span className="sr-only">
@@ -147,6 +149,7 @@ function TrustPage({ onBack }) {
                         </span>
                     </a>
                 </div>
+                <MfaListNotice id="mfa-notice-trust" className="mt-3.5" />
             </div>
 
             <div className="mt-8">

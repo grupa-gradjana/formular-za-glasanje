@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { PDF_FILE_NAME } from "../../pdfAssets";
+import MfaListNotice, { MFA_EMBASSY_LIST_URL } from "../MfaListNotice";
 
 /**
  * Step 6 — the last screen. The zahtev is finished here in two senses: the
@@ -118,16 +119,18 @@ function DoneStep({ docType, pdfBlob }) {
                                 : "Pronađite ambasadu ili konzulat u zemlji u kojoj živite i priložite ovaj jedan fajl."}
                         </p>
                         <a
-                            href="https://www.mfa.gov.rs/predstavnistva/predstavnistva-srbije-u-svetu/ambasade"
+                            href={MFA_EMBASSY_LIST_URL}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="btn btn-ghost"
+                            aria-describedby="mfa-notice-done"
                         >
                             Nađite ambasadu ili konzulat →
                             <span className="sr-only">
                                 (otvara se u novom prozoru)
                             </span>
                         </a>
+                        <MfaListNotice id="mfa-notice-done" className="mt-3" />
                     </div>
                 </li>
                 <li className="numbered-row">

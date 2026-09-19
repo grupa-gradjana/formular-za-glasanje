@@ -1,5 +1,6 @@
 import React from "react";
 import AboutPanel from "../AboutPanel";
+import MfaListNotice, { MFA_EMBASSY_LIST_URL } from "../MfaListNotice";
 
 /**
  * Step 0. Answers "what is this, is it safe, what will it cost me" before
@@ -193,14 +194,20 @@ function WelcomeStep({ onNext, onOpenTrust }) {
                 >
                     Zašto da nam verujete →
                 </button>
-                <a
-                    href="https://www.mfa.gov.rs/predstavnistva/predstavnistva-srbije-u-svetu/ambasade"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Spisak ambasada i konzulata →
-                    <span className="sr-only">(otvara se u novom prozoru)</span>
-                </a>
+                <div>
+                    <a
+                        href={MFA_EMBASSY_LIST_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-describedby="mfa-notice-welcome"
+                    >
+                        Spisak ambasada i konzulata →
+                        <span className="sr-only">
+                            (otvara se u novom prozoru)
+                        </span>
+                    </a>
+                    <MfaListNotice id="mfa-notice-welcome" className="mt-2" />
+                </div>
             </div>
         </div>
     );
