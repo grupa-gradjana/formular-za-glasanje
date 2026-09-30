@@ -580,3 +580,20 @@
     color: var(--text-heading);
     overflow-wrap: break-word;
 }
+
+/* Election addresses on the done screen: a quiet disclosure, one block per
+   country, so the list is there for those who need it and out of the way for
+   everyone else. */
+.izborne-adrese > summary {
+    cursor: pointer;
+}
+
+.izborne-adrese-zemlja {
+    padding: 0.625rem 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.izborne-adrese-zemlja dd a {
+    text-decoration: underline;
+    overflow-wrap: anywhere;
+}
