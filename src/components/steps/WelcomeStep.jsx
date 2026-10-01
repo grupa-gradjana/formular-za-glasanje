@@ -31,12 +31,7 @@ function WelcomeStep({ onNext, onOpenTrust }) {
                 blocks. The label carries the deadline, the block carries the
                 urgency — blue for the one you should aim at, red for the one
                 after which it is too late. */}
-            <div className="deadline-cards mb-7">
-                <div className="deadline-card deadline-card-early">
-                    <p className="deadline-label">Idealni rok za prijavu</p>
-                    <p className="deadline-date">do 24. septembra</p>
-                    <span className="deadline-node" aria-hidden="true" />
-                </div>
+            <div className="deadline-cards mb-7 text-center">
                 <div className="deadline-card deadline-card-last">
                     <p className="deadline-label">Krajnji rok</p>
                     <p className="deadline-date">3. oktobar</p>

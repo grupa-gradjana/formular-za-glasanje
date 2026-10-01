@@ -275,6 +275,12 @@ export const IZBORNE_ADRESE = [
         izvor: "https://oslo.mfa.gov.rs/lat/mediji/aktivnosti/izbori-za-narodne-poslanike-narodne-skupstine-republike-srbije-2026-prijem-zahteva-za-glasanje-u-inostranstvu",
     },
     {
+        zemlja: "Novi Zeland",
+        mesto: "Kanbera (u formularu navesti da želite glasati u Oklandu)",
+        mejlovi: ["consular.canberra@mfa.rs"],
+        izvor: "https://canberra.mfa.gov.rs/lat/mediji/najave-i-obavestenja/izbori-prijavljivanje-za-glasanje-u-inostranstvu",
+    },
+    {
         zemlja: "Poljska",
         mesto: "Varšava",
         mejlovi: ["consular.warsaw@mfa.rs"],
