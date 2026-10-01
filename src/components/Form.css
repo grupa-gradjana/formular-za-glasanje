@@ -584,8 +584,34 @@
 /* Election addresses on the done screen: a quiet disclosure, one block per
    country, so the list is there for those who need it and out of the way for
    everyone else. */
+/* The <summary> is a .btn-ghost pill; drop the native disclosure marker
+   (list-style for Firefox/Chrome, the -webkit pseudo for Safari) and swap the
+   label and the chevron on [open]. */
 .izborne-adrese > summary {
     cursor: pointer;
+    list-style: none;
+    width: fit-content;
+}
+
+.izborne-adrese > summary::-webkit-details-marker {
+    display: none;
+}
+
+.izborne-adrese-zatvori,
+.izborne-adrese[open] .izborne-adrese-otvori {
+    display: none;
+}
+
+.izborne-adrese[open] .izborne-adrese-zatvori {
+    display: inline;
+}
+
+.izborne-adrese-strelica {
+    transition: transform var(--duration-fast) var(--ease-standard);
+}
+
+.izborne-adrese[open] .izborne-adrese-strelica {
+    transform: rotate(180deg);
 }
 
 .izborne-adrese-zemlja {

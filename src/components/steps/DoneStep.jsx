@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { PDF_FILE_NAME } from "../../pdfAssets";
-import MfaListNotice, { MFA_EMBASSY_LIST_URL } from "../MfaListNotice";
 import IzborneAdrese from "../IzborneAdrese";
 
 /**
@@ -119,20 +118,7 @@ function DoneStep({ docType, pdfBlob }) {
                                 ? "Pronađite ambasadu ili konzulat u zemlji u kojoj živite i priložite dva fajla: ovaj PDF i očitanu ličnu kartu."
                                 : "Pronađite ambasadu ili konzulat u zemlji u kojoj živite i priložite ovaj jedan fajl."}
                         </p>
-                        <IzborneAdrese className="mb-4" />
-                        <a
-                            href={MFA_EMBASSY_LIST_URL}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="btn btn-ghost"
-                            aria-describedby="mfa-notice-done"
-                        >
-                            Nađite ambasadu ili konzulat →
-                            <span className="sr-only">
-                                (otvara se u novom prozoru)
-                            </span>
-                        </a>
-                        <MfaListNotice id="mfa-notice-done" className="mt-3" />
+                        <IzborneAdrese noticeId="mfa-notice-done" />
                     </div>
                 </li>
                 <li className="numbered-row">

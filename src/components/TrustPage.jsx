@@ -1,6 +1,6 @@
 import React from "react";
 import AboutPanel from "./AboutPanel";
-import MfaListNotice, { MFA_EMBASSY_LIST_URL } from "./MfaListNotice";
+import IzborneAdrese from "./IzborneAdrese";
 
 /**
  * "Kako da proverite ovu stranicu" — reachable from every screen, mounted
@@ -128,7 +128,7 @@ function TrustPage({ onBack }) {
                         odnesite lično.
                     </li>
                 </ol>
-                <div className="flex flex-wrap gap-3">
+                <div className="mb-5 flex flex-wrap gap-3">
                     <a
                         href="./Zahtev-za-glasanje-u-inostranstvu.pdf"
                         download
@@ -136,20 +136,8 @@ function TrustPage({ onBack }) {
                     >
                         Prazan zahtev (PDF)
                     </a>
-                    <a
-                        href={MFA_EMBASSY_LIST_URL}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="btn btn-ghost"
-                        aria-describedby="mfa-notice-trust"
-                    >
-                        Spisak ambasada i konzulata
-                        <span className="sr-only">
-                            (otvara se u novom prozoru)
-                        </span>
-                    </a>
                 </div>
-                <MfaListNotice id="mfa-notice-trust" className="mt-3.5" />
+                <IzborneAdrese noticeId="mfa-notice-trust" />
             </div>
 
             <div className="mt-8">
